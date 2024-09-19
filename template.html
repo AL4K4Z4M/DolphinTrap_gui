@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .subtext {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: #666;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+        button {
+        width: 100%;
+        padding: 10px;
+        background: {{ button_color }};
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+    }
+    button:hover {
+        background: #9e7fba;
+    }
+    .links {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .links a {
+      display: block;
+      color: #682a8f;
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .address {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .footer {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+    .footer ul li {
+      margin: 0 10px;
+    }
+    .footer ul li a {
+      text-decoration: none;
+      color: #682a8f;
+    }
+    .footer ul li a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 500px) {
+      .container {
+        max-width: 90%;
+      }
+    }
+  </style>
+  <title>{{ company_name }}</title>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <svg width="{{ svg_width }}" height="{{ svg_height }}">{{ svg_data }}</svg>
+    </div>
+    <p class="subtext">{{ slogan }}</p>
+    <form action="/get" method="GET">
+      <div class="form-group">
+        <input type="text" name="email" class="form-control" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the <a href="{{ terms_of_service }}" target="_blank">Terms of Service</a></label>
+      </div>
+      <button type="submit">Connect</button>
+    </form>
+    <div class="links">
+      <a href="{{ contact_page }}" target="_blank">Visit Us</a>
+    </div>
+    <div class="address">
+      <p>
+        <a href="{{ address }}" target="_blank">{{ address }}</a>
+      </p>
+      <p>
+        <a href="tel:{{ phone_number }}">{{ phone_number }}</a>
+      </p>
+    </div>
+    <div class="footer">
+      <ul class="list-unstyled">
+        <li><a href="{{ terms_of_service }}" target="_blank">Terms of Use</a></li>
+        <li><a href="{{ privacy_statement }}" target="_blank">Privacy Statement</a></li>
+        <li><a href="{{ faq }}" target="_blank">FAQ</a></li>
+        <li><a href="{{ contact_page }}" target="_blank">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
