@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox, ttk, PhotoImage
 import json
 import os
 import re
@@ -67,6 +67,7 @@ def on_submit():
     save_location = entry_save_location.get()
     links_color = entry_links_color.get() or "#0000FF"  # Default to blue
     button_color = entry_button_color.get() or "#0000FF"  # Default to blue
+    #hover_color = entry_button_color.get() or "#1100FF"  # Default to a darker blue
 
     if not all([company_name, slogan, svg_file, svg_width, svg_height, address, phone_number, terms_of_service, privacy_statement, faq, contact_page, save_location]):
         messagebox.showerror("Error", "All fields are required.")
@@ -87,6 +88,7 @@ def on_submit():
         "save_location": save_location,
         "links_color": links_color,
         "button_color": button_color
+        #"hover_color": hover_color
     }
 
     # Generate the HTML content
@@ -137,6 +139,7 @@ placeholders = {
     "save_location": "Select save location",
     "links_color": "Enter links color",
     "button_color": "Enter button color"
+    #"hover_color": "Enter button hover color"
 }
 
 def set_placeholder(entry, placeholder):
@@ -156,51 +159,32 @@ def restore_placeholder(event, placeholder):
 def apply_placeholder(entry, placeholder):
     if not entry.get():  # Check if the entry box is empty
         set_placeholder(entry, placeholder)
+    else:
+        entry.config(fg='black')  # Set text color to black if entry has a value
     entry.bind("<FocusIn>", lambda event: clear_placeholder(event, placeholder))
     entry.bind("<FocusOut>", lambda event: restore_placeholder(event, placeholder))
 
 def clear_fields():
-    entry_company_name.delete(0, tk.END)
-    entry_company_name.insert(0, placeholders["company_name"])
+    def clear_entry(entry, placeholder):
+        entry.delete(0, tk.END)
+        entry.insert(0, placeholder)
+        entry.config(fg='grey')
 
-    entry_slogan.delete(0, tk.END)
-    entry_slogan.insert(0, placeholders["slogan"])
-
-    entry_svg_file.delete(0, tk.END)
-    entry_svg_file.insert(0, placeholders["svg_file"])
-
-    entry_svg_width.delete(0, tk.END)
-    entry_svg_width.insert(0, placeholders["svg_width"])
-
-    entry_svg_height.delete(0, tk.END)
-    entry_svg_height.insert(0, placeholders["svg_height"])
-
-    entry_address.delete(0, tk.END)
-    entry_address.insert(0, placeholders["address"])
-
-    entry_phone_number.delete(0, tk.END)
-    entry_phone_number.insert(0, placeholders["phone_number"])
-
-    entry_terms_of_service.delete(0, tk.END)
-    entry_terms_of_service.insert(0, placeholders["terms_of_service"])
-
-    entry_privacy_statement.delete(0, tk.END)
-    entry_privacy_statement.insert(0, placeholders["privacy_statement"])
-
-    entry_faq.delete(0, tk.END)
-    entry_faq.insert(0, placeholders["faq"])
-
-    entry_contact_page.delete(0, tk.END)
-    entry_contact_page.insert(0, placeholders["contact_page"])
-
-    entry_save_location.delete(0, tk.END)
-    entry_save_location.insert(0, placeholders["save_location"])
-
-    entry_links_color.delete(0, tk.END)
-    entry_links_color.insert(0, placeholders["links_color"])
-
-    entry_button_color.delete(0, tk.END)
-    entry_button_color.insert(0, placeholders["button_color"])
+    clear_entry(entry_company_name, placeholders["company_name"])
+    clear_entry(entry_slogan, placeholders["slogan"])
+    clear_entry(entry_svg_file, placeholders["svg_file"])
+    clear_entry(entry_svg_width, placeholders["svg_width"])
+    clear_entry(entry_svg_height, placeholders["svg_height"])
+    clear_entry(entry_address, placeholders["address"])
+    clear_entry(entry_phone_number, placeholders["phone_number"])
+    clear_entry(entry_terms_of_service, placeholders["terms_of_service"])
+    clear_entry(entry_privacy_statement, placeholders["privacy_statement"])
+    clear_entry(entry_faq, placeholders["faq"])
+    clear_entry(entry_contact_page, placeholders["contact_page"])
+    clear_entry(entry_save_location, placeholders["save_location"])
+    clear_entry(entry_links_color, placeholders["links_color"])
+    clear_entry(entry_button_color, placeholders["button_color"])
+    # clear_entry(entry_hover_color, placeholders["hover_color"])
 
 def set_title_bar_color(color):
     hwnd = ctypes.windll.user32.GetParent(root.winfo_id())
@@ -221,7 +205,11 @@ width, height, x, y = load_window_size_and_position()
 root.geometry(f"{width}x{height}+{x}+{y}")
 
 # Set minimum window size
-root.minsize(1200, 700)  # Adjust the minimum width and height as needed
+root.minsize(1000, 700)  # Adjust the minimum width and height as needed
+
+# Load the logo image
+logo = PhotoImage(file='dolphin_logo.png').subsample(20, 20)  # Adjust the subsample factor as needed
+github_logo = PhotoImage(file='LKZM_hat_flip_orange.png').subsample(5, 5)  # Adjust the subsample factor as needed
 
 # Load custom font
 custom_font = tkFont.Font(family="Karmatic Arcade", size=20)
@@ -236,6 +224,10 @@ for i in range(19):  # Adjust the range based on the number of rows
     root.grid_rowconfigure(i, weight=1)
 for i in range(9):  # Adjust the range based on the number of columns
     root.grid_columnconfigure(i, weight=1)
+
+# Create a Label widget with the logo image and place it at the top
+logo_label = tk.Label(root, image=logo, bg='#232323')
+logo_label.grid(row=0, column=0, columnspan=9, pady=10, sticky='nsew')
 
 # Column 1
 tk.Label(root, text="Company Name:", bg='#232323', fg='#ffffff', font=font).grid(row=2, column=0, padx=10, pady=5, sticky='e')
@@ -312,10 +304,15 @@ entry_button_color = tk.Entry(root, font=font)
 entry_button_color.grid(row=6, column=5, padx=10, pady=5, sticky='ew')
 entry_button_color.insert(0, last_inputs.get("button_color", ""))
 
-tk.Label(root, text="Button Hover Color:", bg='#232323', fg='#ffffff', font=font).grid(row=7, column=4, padx=10, pady=5, sticky='e')
-entry_hover_color = tk.Entry(root, font=font)
-entry_hover_color.grid(row=7, column=5, padx=10, pady=5, sticky='ew')
-entry_hover_color.insert(0, last_inputs.get("hover_color", ""))
+tk.Label(root, text="Visit Us URL:", bg='#232323', fg='#ffffff', font=font).grid(row=6, column=0, padx=10, pady=5, sticky='e')
+entry_visit_us = tk.Entry(root, font=font)
+entry_visit_us.grid(row=6, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_visit_us.insert(0, last_inputs.get("visit_us", ""))
+
+#tk.Label(root, text="Button Hover Color:", bg='#232323', fg='#ffffff', font=font).grid(row=7, column=4, padx=10, pady=5, sticky='e')
+#entry_hover_color = tk.Entry(root, font=font)
+#entry_hover_color.grid(row=7, column=5, padx=10, pady=5, sticky='ew')
+#entry_hover_color.insert(0, last_inputs.get("hover_color", ""))
 
 # Apply placeholders to entry widgets
 apply_placeholder(entry_company_name, placeholders["company_name"])
@@ -332,6 +329,7 @@ apply_placeholder(entry_contact_page, placeholders["contact_page"])
 apply_placeholder(entry_save_location, placeholders["save_location"])
 apply_placeholder(entry_links_color, placeholders["links_color"])
 apply_placeholder(entry_button_color, placeholders["button_color"])
+# apply_placeholder(entry_hover_color, placeholders["hover_color"])
 
 # Create and Clear Fields buttons
 tk.Button(root, text="Create Flipper Portal", command=on_submit, bg='#e88004', activebackground='#eb8e36', fg='#ffffff', font=font).grid(row=20, column=2, padx=2, columnspan=2, sticky='nsew')

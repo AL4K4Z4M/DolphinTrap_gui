@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox, ttk, font as tkFont
 import json
 import os
 import re
@@ -70,8 +70,9 @@ def on_submit():
     contact_page = entry_contact_page.get()
     save_location = entry_save_location.get()
     button_color = combo_button_color.get()
+    hover_color = combo_hover_color.get()
 
-    if not all([company_name, slogan, svg_file, svg_width, svg_height, address, phone_number, terms_of_service, privacy_statement, faq, contact_page, save_location, button_color]):
+    if not all([company_name, slogan, svg_file, svg_width, svg_height, address, phone_number, terms_of_service, privacy_statement, faq, contact_page, save_location, button_color,hover_color]):
         messagebox.showerror("Error", "All fields are required.")
         return
 
@@ -88,7 +89,8 @@ def on_submit():
         "faq": faq,
         "contact_page": contact_page,
         "save_location": save_location,
-        "button_color": button_color
+        "button_color": button_color,
+        "hover_color": hover_color
     }
     create_html_file(save_location, replacements)
     save_last_inputs(replacements)
@@ -128,94 +130,101 @@ last_inputs = load_last_inputs()
 width, height, x, y = load_window_size_and_position()
 root.geometry(f"{width}x{height}+{x}+{y}")
 
+# Load custom font
+title_font = tkFont.Font(file="KarmaticArcade-6Yrp1.ttf", size=36)
+
+# Create a Label widget with the custom font for the title
+title_label = tk.Label(root, text="DolphinTrap", font=title_font, bg='#232323', fg='#ffffff')
+title_label.grid(row=0, column=0, columnspan=9, pady=10, sticky='nsew')
+
 # Create and place widgets using grid layout
-tk.Label(root, text="Company Name:").grid(row=0, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Company Name:").grid(row=1, column=0, padx=10, pady=5, sticky='e')
 entry_company_name = tk.Entry(root)
-entry_company_name.grid(row=0, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_company_name.grid(row=1, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_company_name.insert(0, last_inputs.get("company_name", ""))
 
-tk.Label(root, text="Slogan:").grid(row=1, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Slogan:").grid(row=2, column=0, padx=10, pady=5, sticky='e')
 entry_slogan = tk.Entry(root)
-entry_slogan.grid(row=1, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_slogan.grid(row=2, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_slogan.insert(0, last_inputs.get("slogan", ""))
 
-tk.Label(root, text="SVG File:").grid(row=2, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="SVG File:").grid(row=3, column=0, padx=10, pady=5, sticky='e')
 entry_svg_file = tk.Entry(root)
-entry_svg_file.grid(row=2, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_svg_file.grid(row=3, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_svg_file.insert(0, last_inputs.get("svg_file", ""))
-tk.Button(root, text="Browse", command=select_svg_file).grid(row=2, column=3, padx=10, pady=5)
+tk.Button(root, text="Browse", command=select_svg_file).grid(row=3, column=3, padx=10, pady=5)
 
-tk.Label(root, text="SVG Width:").grid(row=3, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="SVG Width:").grid(row=4, column=0, padx=10, pady=5, sticky='e')
 entry_svg_width = tk.Entry(root)
-entry_svg_width.grid(row=3, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_svg_width.grid(row=4, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_svg_width.insert(0, last_inputs.get("svg_width", ""))
 
-tk.Label(root, text="SVG Height:").grid(row=4, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="SVG Height:").grid(row=5, column=0, padx=10, pady=5, sticky='e')
 entry_svg_height = tk.Entry(root)
-entry_svg_height.grid(row=4, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_svg_height.grid(row=5, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_svg_height.insert(0, last_inputs.get("svg_height", ""))
 
-tk.Label(root, text="Address:").grid(row=5, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Address:").grid(row=6, column=0, padx=10, pady=5, sticky='e')
 entry_address = tk.Entry(root)
-entry_address.grid(row=5, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_address.grid(row=6, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_address.insert(0, last_inputs.get("address", ""))
 
-tk.Label(root, text="Phone Number:").grid(row=6, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Phone Number:").grid(row=7, column=0, padx=10, pady=5, sticky='e')
 entry_phone_number = tk.Entry(root)
-entry_phone_number.grid(row=6, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_phone_number.grid(row=7, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_phone_number.insert(0, last_inputs.get("phone_number", ""))
 
-tk.Label(root, text="Terms of Service:").grid(row=7, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Terms of Service:").grid(row=8, column=0, padx=10, pady=5, sticky='e')
 entry_terms_of_service = tk.Entry(root)
-entry_terms_of_service.grid(row=7, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_terms_of_service.grid(row=8, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_terms_of_service.insert(0, last_inputs.get("terms_of_service", ""))
 
-tk.Label(root, text="Privacy Statement:").grid(row=8, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Privacy Statement:").grid(row=9, column=0, padx=10, pady=5, sticky='e')
 entry_privacy_statement = tk.Entry(root)
-entry_privacy_statement.grid(row=8, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_privacy_statement.grid(row=9, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_privacy_statement.insert(0, last_inputs.get("privacy_statement", ""))
 
-tk.Label(root, text="FAQ:").grid(row=9, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="FAQ:").grid(row=10, column=0, padx=10, pady=5, sticky='e')
 entry_faq = tk.Entry(root)
-entry_faq.grid(row=9, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_faq.grid(row=10, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_faq.insert(0, last_inputs.get("faq", ""))
 
-tk.Label(root, text="Contact Page:").grid(row=10, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Contact Page:").grid(row=11, column=0, padx=10, pady=5, sticky='e')
 entry_contact_page = tk.Entry(root)
-entry_contact_page.grid(row=10, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_contact_page.grid(row=11, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_contact_page.insert(0, last_inputs.get("contact_page", ""))
 
-tk.Label(root, text="Save Location:").grid(row=11, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Save Location:").grid(row=12, column=0, padx=10, pady=5, sticky='e')
 entry_save_location = tk.Entry(root)
-entry_save_location.grid(row=11, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+entry_save_location.grid(row=12, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 entry_save_location.insert(0, last_inputs.get("save_location", ""))
-tk.Button(root, text="Browse", command=select_save_location).grid(row=11, column=3, padx=10, pady=5)
+tk.Button(root, text="Browse", command=select_save_location).grid(row=12, column=3, padx=10, pady=5)
 
-tk.Label(root, text="Button Color:").grid(row=12, column=0, padx=10, pady=5, sticky='e')
+tk.Label(root, text="Button Color:").grid(row=13, column=0, padx=10, pady=5, sticky='e')
 combo_button_color = ttk.Combobox(root)
-combo_button_color.grid(row=12, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
+combo_button_color.grid(row=13, column=1, columnspan=2, padx=10, pady=5, sticky='ew')
 combo_button_color.set(last_inputs.get("button_color", ""))
 
 # Create a Listbox for color options with thumbnails
 color_listbox = tk.Listbox(root, height=5)
-color_listbox.grid(row=12, column=3, padx=10, pady=5, sticky='ew')
+color_listbox.grid(row=13, column=3, padx=10, pady=5, sticky='ew')
 
 # Update the Create HTML File button's grid position
-tk.Button(root, text="Create HTML File", command=on_submit).grid(row=13, column=0, columnspan=4, pady=20)
+tk.Button(root, text="Create HTML File", command=on_submit).grid(row=14, column=0, columnspan=4, pady=20)
 
 # Add SVG preview text widget
 svg_preview_text = tk.Text(root, wrap='none', height=10)
-svg_preview_text.grid(row=14, column=0, columnspan=4, padx=10, pady=10, sticky='nsew')
+svg_preview_text.grid(row=15, column=0, columnspan=4, padx=10, pady=10, sticky='nsew')
 
 # Add vertical and horizontal scrollbars to the Text widget
 v_scrollbar = tk.Scrollbar(root, orient='vertical', command=svg_preview_text.yview)
-v_scrollbar.grid(row=14, column=4, sticky='ns')
+v_scrollbar.grid(row=15, column=4, sticky='ns')
 h_scrollbar = tk.Scrollbar(root, orient='horizontal', command=svg_preview_text.xview)
-h_scrollbar.grid(row=15, column=0, columnspan=4, sticky='ew')
+h_scrollbar.grid(row=16, column=0, columnspan=4, sticky='ew')
 svg_preview_text.config(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
 
 # Configure the grid to make the Text widget and window resizable
-root.grid_rowconfigure(14, weight=1)
+root.grid_rowconfigure(15, weight=1)
 root.grid_columnconfigure(1, weight=1)
 root.grid_columnconfigure(2, weight=1)
 
