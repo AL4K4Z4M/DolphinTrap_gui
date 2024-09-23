@@ -5,4 +5,4 @@ I am, absolutely, not a developer, coder, or anything. I am barely learning Pyth
 
 # As of 9/23/2024 this project will not  be updated for the foreseeable future. I decided to pursue creating the same program with my own knowledge and learn as I do it. That project is at https://github.com/AL4K4Z4M/DolphinTrapCLI
 
-### If I ever return to this, it will be on my own, based on the code I am creating for DolphinTrapCLI.
+### If I ever return to this, it will be coded on my own, based on the code I am creating for DolphinTrapCLI.
