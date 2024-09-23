@@ -1,4 +1,4 @@
-#As of 9/23/2024 this project will no longer be updated. I decided to pursue creating the same program with my own knowledge and learn as I do it. That project is at https://github.com/AL4K4Z4M/DolphinTrapCLI
+# As of 9/23/2024 this project will no longer be updated. I decided to pursue creating the same program with my own knowledge and learn as I do it. That project is at https://github.com/AL4K4Z4M/DolphinTrapCLI
 
 ### DolphinTrap
 An evil portal generator designed to create customizable HTML login portals to work with the FlipperZero.
