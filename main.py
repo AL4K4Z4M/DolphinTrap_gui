@@ -338,7 +338,7 @@ tk.Button(root, text="Clear Fields", command=clear_fields, bg='#e88004', activeb
 # GitHub logo link
 github_logo_label = tk.Label(root, image=github_logo, bg='#232323', cursor="hand2")
 github_logo_label.grid(row=21, column=6, columnspan=1, pady=10, sticky='nsew')
-github_logo_label.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/AugustAlcorn"))
+github_logo_label.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/AL4K4Z4M"))
 
 # Configure the grid to center the buttons and logo
 root.grid_columnconfigure(0, weight=1)
